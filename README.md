@@ -1,5 +1,5 @@
 # FitPlan
-#### Video Demo: https://www.youtube.com/watch?v=58OS4OaufQE
+
 #### Description:
 
 # FitPlan — A Simple, Fast, Personal Workout Planner
@@ -22,8 +22,7 @@ FitPlan is a lightweight fitness planning app built for real people who want to 
 
 ## AI Usage
 
-Due to the unleashing of us students to freely use AI tools, I tried out Github Copilot in my local VSCode IDE and it was quite an experience. I am not sure if i was clear enough in my prompting or what but
-it started creating all kinds of files and over-engineering a bunch of things. I didn't personally like the experience of having the AI just spit out an app for me, especially because it wasn't at all what i had in mind. Essentially, I just used the structure that it gave me and modified it heavily to be what i wanted. The experience of using the AI agent to create all the code for me was kind of a bummer, i REALLY enjoy sitting down, locking in and hammering away in my IDE. I can absolutely see the power that these tools provide but there is a little bit of me that is saddened by this as I was hoping to build a career in software engineering. If software engineering is to become just refining your AI prompts and building projects that way, I'm not so sure if that's for me.
+Largely made by Github Copilot as an experiment.
 
 ## Features
 
