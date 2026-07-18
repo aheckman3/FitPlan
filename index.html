@@ -1,0 +1,188 @@
+c<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b3d91" />
+  <meta name="mobile-web-app-capable" content="yes" />asdsad
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FitPlan" />
+  <title>FitPlan PWA</title>
+  <link rel="stylesheet" href="style.css?v=2" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-192.png" />
+  <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#0b3d91" />
+</head>
+<body>
+  <div class="app-shell">
+    <div id="goalCompletionPopup" class="goal-popup hidden" role="status" aria-live="polite">
+      <div class="goal-popup-content">
+        <div class="goal-popup-icon">✔</div>
+        <div>
+          <h3>Goal Completed</h3>
+          <p id="popupGoalName">Your goal is complete.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="actionPopup" class="action-popup hidden" role="status" aria-live="polite">
+      <div class="action-popup-content">
+        <div class="action-popup-icon" id="actionPopupIcon">✓</div>
+        <div>
+          <h3 id="actionPopupTitle">Saved</h3>
+          <p id="actionPopupMessage">Your update was saved.</p>
+        </div>
+      </div>
+    </div>
+
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark">🏋️</span>
+        <div>
+          <h1>FitPlan</h1>
+          <p>Workout planner, tracker, and goals dashboard</p>
+        </div>
+      </div>
+
+      <button id="installButton" class="install-button hidden">Install App</button>
+    </header>
+
+    <main class="app-main">
+      <nav class="nav-tabs" id="navTabs">
+        <button id="loginTabButton" class="tab-button active" data-panel="loginPanel">Login</button>
+        <button class="tab-button" data-panel="plannerPanel">Planner</button>
+        <button class="tab-button" data-panel="logPanel">Log</button>
+        <button class="tab-button" data-panel="goalsPanel">Goals</button>
+        <button class="tab-button" data-panel="statsPanel">Stats</button>
+      </nav>
+
+      <section class="panel" id="loginPanel">
+        <h2>Account Login</h2>
+        <div class="auth-grid">
+          <form id="loginForm" class="card">
+            <h3>Sign in</h3>
+            <label>Email<input type="email" id="loginEmail" required /></label>
+            <label>Password<input type="password" id="loginPassword" required /></label>
+            <button type="submit">Log In</button>
+          </form>
+
+          <form id="signupForm" class="card">
+            <h3>Create account</h3>
+            <label>Email<input type="email" id="signupEmail" required /></label>
+            <label>Password<input type="password" id="signupPassword" required minlength="6" /></label>
+            <button type="submit">Sign Up</button>
+        </form>
+        </div>
+
+      </section>
+
+      <section class="panel hidden" id="plannerPanel">
+        <div class="panel-header">
+          <h2>Workout Planner</h2>
+        </div>
+        <form id="plannerForm" class="card">
+          <label>Workout name<input type="text" id="workoutName" placeholder="Upper body, Cardio" required /></label>
+          <label>Description<textarea id="workoutDescription" rows="3" placeholder="Add workout details"></textarea></label>
+          <label>Duration (minutes)<input type="number" id="workoutDuration" min="5" placeholder="Optional" /></label>
+          <label>Date (Optional)<input type="date" id="workoutDate" /></label>
+          <label>Recurring<select id="workoutRecurring">
+            <option value="none">Not recurring</option>
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+          </select></label>
+          <label>Recurring days/weeks (optional)<input type="number" id="workoutRecurringInterval" min="1" placeholder="1" /></label>
+          <button type="submit">Save Plan</button>
+        </form>
+        <div id="plannerList" class="card list-card">
+          <h3>Planned Workouts</h3>
+          <ul></ul>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="logPanel">
+        <h2>Workout Log</h2>
+        <form id="logForm" class="card">
+          <label>Workout<select id="logWorkout" required></select></label>
+          <div id="unplannedFields" class="hidden">
+            <label>Workout name
+              <input type="text" id="unplannedName" placeholder="Push-ups, jogging, etc." />
+            </label>
+
+            <label>Duration  (minutes)
+              <input type="number" id="unplannedDuration" placeholder="15" />
+            </label>
+          </div>
+          <label class="completed-label">Completed<input type="checkbox" id="logCompleted" checked /></label>
+          <label>Notes<textarea id="logNotes" rows="3" placeholder="How did it go?"></textarea></label>
+          <button type="submit">Add Log Entry</button>
+        </form>
+        <div id="logList" class="card list-card">
+          <h3>Workout History</h3>
+          <ul></ul>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="goalsPanel">
+        <h2>Goals</h2>
+        <form id="goalForm" class="card">
+          <label>Goal title<input type="text" id="goalTitle" placeholder="Run 5K, 10 pushups" required /></label>
+          <label>Goal type<select id="goalType">
+            <option value="count">Count-based</option>
+            <option value="workout">Workout-based</option>
+          </select></label>
+          <label>Workout name (optional)<input type="text" id="goalWorkoutName" placeholder="Push-ups, Running, etc." /></label>
+          <label>Target amount<input type="number" id="goalProgress" min="1" value="1" required /></label>
+          <label>Target date<input type="date" id="goalDate" required /></label>
+          <button type="submit">Add Goal</button>
+        </form>
+        <div id="goalList" class="card list-card">
+          <h3>Active Goals</h3>
+          <ul></ul>
+        </div>
+        <div id="completedGoalList" class="card list-card">
+          <h3>Completed Goals</h3>
+          <ul></ul>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="statsPanel">
+        <h2>Tracking Dashboard</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>Total Planned</h3>
+            <p id="statPlanned">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Logged Workouts</h3>
+            <p id="statLogged">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Goals Active</h3>
+            <p id="statGoals">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Goals Completed</h3>
+            <p id="statCompletedGoals">0</p>
+          </div>
+          <div class="stat-card">
+            <h3>Average Progress</h3>
+            <p id="statProgress">0%</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <footer class="app-footer">
+      <button id="clearAllDataButton" class="secondary-button" type="button">Clear All Data</button>
+      <button id="signOutButton" class="secondary-button hidden">Sign Out</button>
+      <p>Built by Anthony Heckman.</p>
+    </footer>
+  </div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
